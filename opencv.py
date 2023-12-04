@@ -3,13 +3,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-img = cv2.imread("screen.png")
-target = cv2.imread("target.png")
-mask = cv2.imread("target.png")
+img = cv2.imread("test_img\\img.png")
+target = cv2.imread("test_img\\target.png")
+mask = target
 cv2.imshow("img",img)
-
 cv2.imshow("target",target)
-
+result = cv2.bitwise_and(img,img, mask= mask)
 
 methods = ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED', 'cv2.TM_CCORR',
             'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF', 'cv2.TM_SQDIFF_NORMED']
@@ -17,7 +16,7 @@ w, h = target.shape[0] , target.shape[1]
 
 for meth in methods:
     method = eval(meth)
-    res = cv2.matchTemplate(img,target,method, mask=mask)
+    res = cv2.matchTemplate(img,target,method)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
     if method in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]:
         top_left = min_loc

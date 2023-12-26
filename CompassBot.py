@@ -4,13 +4,15 @@ import win32api
 import time
 from keycode import VK_CODE
 
-#
 
-while True:
+def Ctrl_C():
     win32api.keybd_event(VK_CODE["ctrl"], 0, 0, 0)
     win32api.keybd_event(VK_CODE["c"], 0, 0, 0)
     win32api.keybd_event(VK_CODE["ctrl"], 0, win32con.KEYEVENTF_KEYUP, 0)
     win32api.keybd_event(VK_CODE["c"], 0, win32con.KEYEVENTF_KEYUP, 0)
+
+
+while True:
     win32clipboard.OpenClipboard()
     data = win32clipboard.GetClipboardData()
     win32clipboard.CloseClipboard()

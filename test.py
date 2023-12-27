@@ -8,20 +8,27 @@ import time
 import pyautogui
 import keycode
 
-template = cv2.imread("Compass\\voidstone.png")
-
+screenshot = cv2.imread("Compass\\Stash.png")
+template = cv2.imread("Compass\\stash_block.png")
+cv2.imshow("screenshot", screenshot)
 while True:
-    screenshot = pyautogui.screenshot()
-    screenshot = cv2.cvtColor(numpy.array(screenshot), cv2.COLOR_RGB2BGR)
     method = cv2.TM_CCORR_NORMED
-
-    res = cv2.matchTemplate(screenshot, template, method)
+    result = cv2.matchTemplate(screenshot, template, method)
     # val = match Similarity
-    min_val, max_val, min_location, max_location = cv2.minMaxLoc(res)
-
-    if max_val < 0.95:
-        time.sleep(0.1)
-        continue
-
-    print(f"Target: {max_location}, {max_val}")
-    time.sleep(1)
+    minval, maxval, minloc, maxloc = cv2.minMaxLoc(result)
+    if maxval > 0.92:
+        print("Found")
+        screenshot = cv2.rectangle(
+            screenshot,
+            (maxloc[0] + 2, maxloc[1] + 2),
+            (maxloc[0] + template.shape[0] - 2, maxloc[1] + template.shape[1] - 2),
+            (0, 0, 255),
+            1,
+        )
+    else:
+        print("Not Found")
+        cv2.imshow("screenshot", screenshot)
+        time.sleep(100)
+        break
+    cv2.imshow("screenshot", screenshot)
+    cv2.waitKey(1)

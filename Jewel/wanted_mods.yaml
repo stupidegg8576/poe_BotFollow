@@ -1,0 +1,4 @@
+prefix:
+    # "mods" : weights
+    "+# to maximum life": 1
+    "+# to maximum mana": 1

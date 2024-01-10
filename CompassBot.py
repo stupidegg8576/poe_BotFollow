@@ -128,6 +128,7 @@ def use_sextant():
         return -1
     win32api.SetCursorPos(sextant_pos)
     time.sleep(0.1)
+
     mouse_rightclick()
     time.sleep(0.1)
     return 0

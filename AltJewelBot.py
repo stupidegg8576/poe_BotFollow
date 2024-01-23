@@ -68,6 +68,13 @@ def read_clipboard():
             return data
         except:
             time.sleep(0.1)
+            return ""
+
+
+def clear_clipboard():
+    win32clipboard.OpenClipboard()
+    win32clipboard.EmptyClipboard()
+    win32clipboard.CloseClipboard()
 
 
 def Ctrl_Alt_C():
@@ -93,12 +100,56 @@ def mouse_leftclick():
     time.sleep(0.05)
 
 
-def Alt_Jewel(jewel_pos):
-    global alt_pos
+def Aug_Jewel(jewel_pos):
     global aug_pos
     global failed_try
 
-    if alt_pos is None or aug_pos is None:
+    if aug_pos is None:
+        time.sleep(0.1)
+        screenshot = cv2.cvtColor(
+            numpy.array(pyautogui.screenshot()),
+            cv2.COLOR_RGB2BGR,
+        )
+
+        aug_res = cv2.matchTemplate(screenshot, aug_img, cv2.TM_CCORR_NORMED)
+        min_val, max_val, min_location, max_location = cv2.minMaxLoc(aug_res)
+        if max_val >= AUG_THRESHOLD:
+            aug_pos = (
+                int(max_location[0] + aug_img.shape[1] / 2),
+                int(max_location[1] + aug_img.shape[0] / 2),
+            )
+        else:
+            failed_try += 1
+            print("can't find aug")
+            return
+
+    if failed_try >= 50:
+        print("failed to find aug jewel")
+        exit()
+
+    win32api.SetCursorPos(aug_pos)
+    clear_clipboard()
+    time.sleep(0.05)
+    Ctrl_Alt_C()
+    time.sleep(0.05)
+    target_currency = read_clipboard()
+    if regex.search("Augmentation", target_currency) is None:
+        print("can't find aug")
+        aug_pos = None
+        return
+    mouse_rightclick()
+    time.sleep(0.05)
+    win32api.SetCursorPos(jewel_pos)
+    time.sleep(0.05)
+    mouse_leftclick()
+    time.sleep(0.05)
+
+
+def Alt_Jewel(jewel_pos):
+    global alt_pos
+    global failed_try
+
+    if alt_pos is None:
         time.sleep(0.1)
         screenshot = cv2.cvtColor(
             numpy.array(pyautogui.screenshot()),
@@ -118,23 +169,12 @@ def Alt_Jewel(jewel_pos):
             print("can't find alt")
             return
 
-        aug_res = cv2.matchTemplate(screenshot, aug_img, cv2.TM_CCORR_NORMED)
-        min_val, max_val, min_location, max_location = cv2.minMaxLoc(aug_res)
-        if max_val >= AUG_THRESHOLD:
-            aug_pos = (
-                int(max_location[0] + aug_img.shape[1] / 2),
-                int(max_location[1] + aug_img.shape[0] / 2),
-            )
-        else:
-            failed_try += 1
-            print("can't find aug")
-            return
-
     if failed_try >= 50:
         print("failed to find alt jewel")
         exit()
 
     win32api.SetCursorPos(alt_pos)
+    clear_clipboard()
     time.sleep(0.05)
     Ctrl_Alt_C()
     time.sleep(0.05)
@@ -151,33 +191,21 @@ def Alt_Jewel(jewel_pos):
     mouse_leftclick()
     time.sleep(0.05)
 
-    win32api.SetCursorPos(aug_pos)
-    time.sleep(0.05)
-    Ctrl_Alt_C()
-    time.sleep(0.05)
-    target_currency = read_clipboard()
-    if regex.search("Augmentation", target_currency) is None:
-        print("can't find aug")
-        aug_pos = None
-        return
-    mouse_rightclick()
-    time.sleep(0.05)
-    win32api.SetCursorPos(jewel_pos)
-    time.sleep(0.05)
-    mouse_leftclick()
-    time.sleep(0.05)
-
     return
 
 
 # main loop of alt all jewel
 def main():
     global pause
+    total_alt_count = 0
+    total_aug_count = 0
     for jewel_pos in stash_blocks:
         alt_count = 0
+        aug_count = 0
         while True:
             check_pause()
             win32api.SetCursorPos(jewel_pos)
+            clear_clipboard()
             time.sleep(0.1)
             Ctrl_Alt_C()
             time.sleep(0.1)
@@ -195,9 +223,32 @@ def main():
             if count >= 2:
                 print(f"Alt used:{alt_count}, {jewel}")
                 break
-            else:
-                Alt_Jewel(jewel_pos)
-                alt_count += 1
+
+            Alt_Jewel(jewel_pos)
+            alt_count += 1
+            total_alt_count += 1
+
+            check_pause()
+            win32api.SetCursorPos(jewel_pos)
+            clear_clipboard()
+            time.sleep(0.1)
+            Ctrl_Alt_C()
+            time.sleep(0.1)
+            target_jewel = read_clipboard()
+            count = 0
+            jewel = []
+            for mod in jewel_mods:
+                result = regex.search(mod[0], target_jewel)
+                if result is not None:
+                    if int(result.group(1)) >= mod[1]:
+                        jewel.append(f"{mod[0]}, {int(result.group(1))}")
+                        # print(mod[0], int(result.group(1))
+                        count += 1
+            if count == 0:
+                continue
+            Aug_Jewel(jewel_pos)
+            aug_count += 1
+            total_aug_count += 1
 
 
 main()

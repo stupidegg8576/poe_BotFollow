@@ -1,8 +1,12 @@
-import yaml
+import win32clipboard
+import win32con
+import win32api
+import time
+from keycode import VK_CODE
+import cv2
+import pyautogui
+import numpy
 
-with open("Jewel\\wanted_mods.yaml") as f:
-    a = yaml.load(f, Loader=yaml.FullLoader)
-
-
-for i in a:
-    print(i)
+while True:
+    print(win32api.GetCursorPos())
+    time.sleep(0.5)

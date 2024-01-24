@@ -56,7 +56,7 @@ def check_pause():
             pause = False
         if pause == False:
             return
-        time.sleep(0.1)
+        time.sleep(0.05)
 
 
 def read_clipboard():
@@ -67,14 +67,17 @@ def read_clipboard():
             win32clipboard.CloseClipboard()
             return data
         except:
-            time.sleep(0.1)
+            time.sleep(0.05)
             return ""
 
 
 def clear_clipboard():
-    win32clipboard.OpenClipboard()
-    win32clipboard.EmptyClipboard()
-    win32clipboard.CloseClipboard()
+    try:
+        win32clipboard.OpenClipboard()
+        win32clipboard.EmptyClipboard()
+        win32clipboard.CloseClipboard()
+    except:
+        pass
 
 
 def Ctrl_Alt_C():
@@ -105,7 +108,7 @@ def Aug_Jewel(jewel_pos):
     global failed_try
 
     if aug_pos is None:
-        time.sleep(0.1)
+        time.sleep(0.05)
         screenshot = cv2.cvtColor(
             numpy.array(pyautogui.screenshot()),
             cv2.COLOR_RGB2BGR,
@@ -135,6 +138,7 @@ def Aug_Jewel(jewel_pos):
     target_currency = read_clipboard()
     if regex.search("Augmentation", target_currency) is None:
         print("can't find aug")
+        failed_try += 1
         aug_pos = None
         return
     mouse_rightclick()
@@ -150,7 +154,7 @@ def Alt_Jewel(jewel_pos):
     global failed_try
 
     if alt_pos is None:
-        time.sleep(0.1)
+        time.sleep(0.05)
         screenshot = cv2.cvtColor(
             numpy.array(pyautogui.screenshot()),
             cv2.COLOR_RGB2BGR,
@@ -182,6 +186,7 @@ def Alt_Jewel(jewel_pos):
     target_currency = read_clipboard()
     if regex.search("Alteration", target_currency) is None:
         print("can't find alt")
+        failed_try += 1
         alt_pos = None
         return
     mouse_rightclick()
@@ -206,9 +211,9 @@ def main():
             check_pause()
             win32api.SetCursorPos(jewel_pos)
             clear_clipboard()
-            time.sleep(0.1)
+            time.sleep(0.05)
             Ctrl_Alt_C()
-            time.sleep(0.1)
+            time.sleep(0.05)
             target_jewel = read_clipboard()
             count = 0
             jewel = []
@@ -219,7 +224,6 @@ def main():
                         jewel.append(f"{mod[0]}, {int(result.group(1))}")
                         # print(mod[0], int(result.group(1))
                         count += 1
-
             if count >= 2:
                 print(f"Alt used:{alt_count}, {jewel}")
                 break
@@ -231,9 +235,9 @@ def main():
             check_pause()
             win32api.SetCursorPos(jewel_pos)
             clear_clipboard()
-            time.sleep(0.1)
+            time.sleep(0.05)
             Ctrl_Alt_C()
-            time.sleep(0.1)
+            time.sleep(0.05)
             target_jewel = read_clipboard()
             count = 0
             jewel = []
@@ -246,6 +250,7 @@ def main():
                         count += 1
             if count == 0:
                 continue
+            time.sleep(0.05)
             Aug_Jewel(jewel_pos)
             aug_count += 1
             total_aug_count += 1

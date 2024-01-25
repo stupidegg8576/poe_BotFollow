@@ -19,6 +19,8 @@ pause = True
 alt_pos = None
 aug_pos = None
 failed_try = 0
+total_alt_count = 0
+total_aug_count = 0
 
 
 alt_img = cv2.imread("Currency\\Alteration.png")
@@ -45,6 +47,8 @@ for i in range(12):
 
 def check_pause():
     global pause
+    global total_alt_count
+    global total_aug_count
     while True:
         if win32api.GetKeyState(VK_CODE["F1"]) < 0:
             pause = True
@@ -54,6 +58,11 @@ def check_pause():
             if DEBUG:
                 print("start")
             pause = False
+        if win32api.GetKeyState(VK_CODE["F3"]) < 0:
+            print("exit")
+            print("alt used:", total_alt_count)
+            print("aug used:", total_aug_count)
+            exit()
         if pause == False:
             return
         time.sleep(0.05)
@@ -202,8 +211,8 @@ def Alt_Jewel(jewel_pos):
 # main loop of alt all jewel
 def main():
     global pause
-    total_alt_count = 0
-    total_aug_count = 0
+    global total_alt_count
+    global total_aug_count
     for jewel_pos in stash_blocks:
         alt_count = 0
         aug_count = 0

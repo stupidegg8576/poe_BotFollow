@@ -217,13 +217,13 @@ def main():
             target_jewel = read_clipboard()
             count = 0
             jewel = []
-            for mod in jewel_mods:
-                result = regex.search(mod[0], target_jewel)
+            for mod, threshold, wiehgt in jewel_mods:
+                result = regex.search(mod, target_jewel)
                 if result is not None:
-                    if int(result.group(1)) >= mod[1]:
-                        jewel.append(f"{mod[0]}, {int(result.group(1))}")
+                    if int(result.group(1)) >= threshold:
+                        jewel.append(f"{mod}, {int(result.group(1))}")
                         # print(mod[0], int(result.group(1))
-                        count += 1
+                        count += wiehgt
             if count >= 2:
                 print(f"Alt used:{alt_count}, {jewel}")
                 break
@@ -241,13 +241,13 @@ def main():
             target_jewel = read_clipboard()
             count = 0
             jewel = []
-            for mod in jewel_mods:
-                result = regex.search(mod[0], target_jewel)
+            for mod, threshold, wiehgt in jewel_mods:
+                result = regex.search(mod, target_jewel)
                 if result is not None:
-                    if int(result.group(1)) >= mod[1]:
-                        jewel.append(f"{mod[0]}, {int(result.group(1))}")
+                    if int(result.group(1)) >= threshold:
+                        jewel.append(f"{mod}, {int(result.group(1))}")
                         # print(mod[0], int(result.group(1))
-                        count += 1
+                        count += wiehgt
             if count == 0:
                 continue
             time.sleep(0.05)

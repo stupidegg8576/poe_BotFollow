@@ -4,10 +4,8 @@ Conqueror Map
 Pack Size in your Unidentified Maps
 Your Maps contain Alva
 Your Maps contain Jun
-Your Maps contain Niko
 Your Maps contain 2 additional Strongboxes
 25% increased Magic Pack Size
-Your Rare Maps contain 4 additional Rare Monster packs
 Strongbox Monsters are Enraged
 Your Maps contain hunted traitors
 Your Maps contain an additional Breach
@@ -32,3 +30,6 @@ contain The Sacred Grove
 contain Ritual Altars
 Your Maps have 20% Quality
 Smuggler's Cache
+from Immortal Syndicate targets encountered in your Maps
+Delirium Reward Bars fill 100% faster in your Maps
+do not apply Soul Gain Prevention

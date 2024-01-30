@@ -35,12 +35,12 @@ stash_bottom = 826
 blocksize = int((stash_right - stash_left) / 12)
 stash_blocks = []
 
-for i in range(12):
-    for j in range(5):
+for i in range(6):
+    for j in range(2):
         stash_blocks.append(
             (
-                int(stash_left + (i + 0.5) * blocksize),
-                int(stash_top + (j + 0.5) * blocksize),
+                int(stash_left + (2 * i + 0.5) * blocksize),
+                int(stash_top + (2 * j + 0.5) * blocksize),
             )
         )
 
@@ -228,12 +228,9 @@ def main():
             count = 0
             jewel = []
             for mod, threshold, weihgt in jewel_mods:
-                result = regex.search(mod, target_jewel)
+                result = regex.search("to Level of all Spell Skill Gems", target_jewel)
                 if result is not None:
-                    if int(result.group(1)) >= threshold:
-                        jewel.append(f"{mod}, {int(result.group(1))}")
-                        # print(mod[0], int(result.group(1))
-                        count += weihgt
+                    count = 2
             if count >= 2:
                 time.sleep(0.05)
                 Aug_Jewel(jewel_pos)
@@ -255,14 +252,10 @@ def main():
             count = 0
             jewel = []
             for mod, threshold, weihgt in jewel_mods:
-                result = regex.search(mod, target_jewel)
+                result = regex.search("Prefix", target_jewel)
                 if result is not None:
-                    if int(result.group(1)) >= threshold:
-                        jewel.append(f"{mod}, {int(result.group(1))}")
-                        # print(mod[0], int(result.group(1))
-                        count += weihgt
-                        print(mod, count, weihgt)
-            if count == 0:
+                    count -= 100
+            if count < 0:
                 continue
             time.sleep(0.05)
             Aug_Jewel(jewel_pos)

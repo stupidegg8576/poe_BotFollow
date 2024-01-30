@@ -29,11 +29,11 @@ pause = True
 def check_pause():
     global pause
     while True:
-        if win32api.GetKeyState(VK_CODE["z"]) < 0:
+        if win32api.GetKeyState(VK_CODE["F1"]) < 0:
             pause = True
             if DEBUG:
                 print("pause")
-        if win32api.GetKeyState(VK_CODE["x"]) < 0 and pause:
+        if win32api.GetKeyState(VK_CODE["F2"]) < 0 and pause:
             if DEBUG:
                 print("start")
             pause = False

@@ -66,7 +66,7 @@ vaalside_pos = None
 screenshot = cv2.cvtColor(numpy.array(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
 vaalside_res = cv2.matchTemplate(screenshot, normal_vaalside, cv2.TM_CCORR_NORMED)
 min_val, max_val, min_location, max_location = cv2.minMaxLoc(vaalside_res)
-if max_val > 0.92:
+if max_val > 0.90:
     vaalside_pos = max_location
 count = 0
 while True:
@@ -106,7 +106,7 @@ while True:
     screenshot = cv2.cvtColor(numpy.array(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
     scour_res = cv2.matchTemplate(screenshot, scour, cv2.TM_CCORR_NORMED)
     min_val, max_val, min_location, max_location = cv2.minMaxLoc(scour_res)
-    if max_val > 0.94:
+    if max_val > 0.92:
         win32api.SetCursorPos(
             (
                 max_location[0] + int(scour.shape[1] / 2),

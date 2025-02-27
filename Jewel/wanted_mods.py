@@ -13,8 +13,7 @@ jewel_mods.append([r"([0-9]+)\(15-18\)% to Critical Strike Multiplier", 15, 1])
 jewel_mods.append(
     [r"([0-9]+)\(15-18\)% to Critical Strike Multiplier with Fire", 15, -1]
 )
-jewel_mods.append([r"([0-9]+)\(4-6\)% increased Rarity of Items found", 6, 1])
-jewel_mods.append([r"([0-9]+)\(4-6\)% increased Rarity of Items found", 6, 1])
+jewel_mods.append([r"([0-9]+)\(4-6\)% increased Rarity of Items found", 6, 1.4])
 jewel_mods.append([r"([0-9]+)\(7-13\)% to Chaos Resistance", 11, 1])
 jewel_mods.append([r"([0-9]+)\(6-8\)% to Fire Damage over Time Multiplier", 6, 0.6])
 jewel_mods.append([r"([0-9]+)\(6-8\)% to Chaos Damage over Time Multiplier", 6, 0.6])

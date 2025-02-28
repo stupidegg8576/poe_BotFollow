@@ -65,7 +65,7 @@ def check_pause():
             exit()
         if pause == False:
             return
-        time.sleep(0.05)
+        time.sleep(0.2)
 
 
 def read_clipboard():
@@ -76,7 +76,7 @@ def read_clipboard():
             win32clipboard.CloseClipboard()
             return data
         except:
-            time.sleep(0.05)
+            time.sleep(0.2)
             return ""
 
 
@@ -102,14 +102,14 @@ def mouse_rightclick():
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
     time.sleep(0.03)
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-    time.sleep(0.05)
+    time.sleep(0.2)
 
 
 def mouse_leftclick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
     time.sleep(0.03)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-    time.sleep(0.05)
+    time.sleep(0.2)
 
 
 def Aug_Jewel(jewel_pos):
@@ -142,9 +142,9 @@ def Aug_Jewel(jewel_pos):
 
     win32api.SetCursorPos(aug_pos)
     clear_clipboard()
-    time.sleep(0.05)
+    time.sleep(0.2)
     Ctrl_Alt_C()
-    time.sleep(0.05)
+    time.sleep(0.2)
     target_currency = read_clipboard()
     if regex.search("Augmentation", target_currency) is None:
         print("can't find aug")
@@ -152,11 +152,11 @@ def Aug_Jewel(jewel_pos):
         aug_pos = None
         return
     mouse_rightclick()
-    time.sleep(0.05)
+    time.sleep(0.2)
     win32api.SetCursorPos(jewel_pos)
-    time.sleep(0.05)
+    time.sleep(0.2)
     mouse_leftclick()
-    time.sleep(0.05)
+    time.sleep(0.2)
 
 
 def Alt_Jewel(jewel_pos):
@@ -190,9 +190,9 @@ def Alt_Jewel(jewel_pos):
 
     win32api.SetCursorPos(alt_pos)
     clear_clipboard()
-    time.sleep(0.05)
+    time.sleep(0.2)
     Ctrl_Alt_C()
-    time.sleep(0.05)
+    time.sleep(0.2)
 
     target_currency = read_clipboard()
     if regex.search("Alteration", target_currency) is None:
@@ -201,11 +201,11 @@ def Alt_Jewel(jewel_pos):
         alt_pos = None
         return
     mouse_rightclick()
-    time.sleep(0.05)
+    time.sleep(0.2)
     win32api.SetCursorPos(jewel_pos)
-    time.sleep(0.05)
+    time.sleep(0.2)
     mouse_leftclick()
-    time.sleep(0.05)
+    time.sleep(0.2)
 
     return
 
@@ -224,11 +224,10 @@ def main():
         print(f"alt used:{total_alt_count}, aug used:{total_aug_count}", end="\r")
         win32api.SetCursorPos(stash_pos)
         clear_clipboard()
-        time.sleep(0.05)
+        time.sleep(0.1)
         Ctrl_Alt_C()
-        time.sleep(0.05)
+        time.sleep(0.1)
         target_jewel = read_clipboard()
-        print(target_jewel)
         count = 0
         jewel = []
 
@@ -237,9 +236,8 @@ def main():
             if result is not None:
                 print(mod[0], result)
                 count += weihgt
-
         if count:
-            time.sleep(0.05)
+            time.sleep(0.1)
             print(f"Alt used:{alt_count}, {jewel}")
             pause = True
             check_pause()
@@ -251,9 +249,9 @@ def main():
         check_pause()
         win32api.SetCursorPos(stash_pos)
         clear_clipboard()
-        time.sleep(0.05)
+        time.sleep(0.1)
         Ctrl_Alt_C()
-        time.sleep(0.05)
+        time.sleep(0.1)
         target_jewel = read_clipboard()
         count = 0
         jewel = []
@@ -267,13 +265,13 @@ def main():
             if "Prefix Modifier" in target_jewel:
                 has_prefix = True
         if count >= 1:
-            time.sleep(0.05)
+            time.sleep(0.1)
             print(f"Alt used:{alt_count}, {jewel}")
             pause = True
             check_pause()
         if has_prefix:
             continue
-        time.sleep(0.05)
+        time.sleep(0.1)
         Aug_Jewel(stash_pos)
         aug_count += 1
         total_aug_count += 1
